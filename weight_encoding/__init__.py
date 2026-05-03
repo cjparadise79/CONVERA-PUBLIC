@@ -1,0 +1,1 @@
+"""Public weight encoding modules."""

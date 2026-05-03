@@ -1,0 +1,10 @@
+torch
+transformers
+accelerate
+numpy
+fastapi
+uvicorn
+requests
+reportlab
+huggingface_hub
+matplotlib

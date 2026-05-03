@@ -1,0 +1,323 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R] /Count 8 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+6 0 obj
+<< /Length 1824 >>
+stream
+BT /F2 20.00 Tf 54.00 738.00 Td (CONVERA Command Manual) Tj ET
+BT /F2 15.00 Tf 54.00 695.20 Td (Overview) Tj ET
+BT /F1 10.00 Tf 54.00 662.40 Td (This manual describes the public CONVERA command surface. Commands should be run from the) Tj ET
+BT /F1 10.00 Tf 54.00 648.40 Td (project root:) Tj ET
+BT /F3 8.50 Tf 54.00 614.80 Td (cd "/Users/christopherparadise/Documents/New project") Tj ET
+BT /F2 15.00 Tf 54.00 577.70 Td (Environment Setup) Tj ET
+BT /F1 10.00 Tf 54.00 544.90 Td (Create and activate a virtual environment:) Tj ET
+BT /F3 8.50 Tf 54.00 511.30 Td (python3 -m venv .venv) Tj ET
+BT /F3 8.50 Tf 54.00 498.80 Td (source .venv/bin/activate) Tj ET
+BT /F3 8.50 Tf 54.00 486.30 Td (pip install -e .) Tj ET
+BT /F1 10.00 Tf 54.00 454.20 Td (On systems with Python 3.12 installed through Homebrew, this project has also used:) Tj ET
+BT /F3 8.50 Tf 54.00 420.60 Td (/opt/homebrew/bin/python3.12 -m venv .venv312) Tj ET
+BT /F3 8.50 Tf 54.00 408.10 Td (source .venv312/bin/activate) Tj ET
+BT /F3 8.50 Tf 54.00 395.60 Td (pip install -e .) Tj ET
+BT /F2 15.00 Tf 54.00 358.50 Td (Health Check) Tj ET
+BT /F1 10.00 Tf 54.00 325.70 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 292.10 Td (convera health) Tj ET
+BT /F1 10.00 Tf 54.00 260.00 Td (Purpose:) Tj ET
+BT /F1 10.00 Tf 68.00 236.20 Td (- Verifies that the CLI is available.) Tj ET
+BT /F1 10.00 Tf 68.00 222.20 Td (- Prints core runtime paths.) Tj ET
+BT /F1 10.00 Tf 68.00 208.20 Td (- Creates runtime directories if needed.) Tj ET
+BT /F1 10.00 Tf 54.00 184.40 Td (Expected output shape:) Tj ET
+BT /F3 8.50 Tf 54.00 150.80 Td ([CONVERA] health ok) Tj ET
+BT /F3 8.50 Tf 54.00 138.30 Td ([PATH] models=...) Tj ET
+BT /F3 8.50 Tf 54.00 125.80 Td ([PATH] data=...) Tj ET
+BT /F3 8.50 Tf 54.00 113.30 Td ([PATH] chunks=...) Tj ET
+BT /F2 15.00 Tf 54.00 76.20 Td (Download A Model) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 1597 >>
+stream
+BT /F1 10.00 Tf 54.00 738.00 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 704.40 Td (python scripts/download_llama.py) Tj ET
+BT /F1 10.00 Tf 54.00 672.30 Td (Default target:) Tj ET
+BT /F3 8.50 Tf 54.00 638.70 Td (meta-llama/Meta-Llama-3-8B) Tj ET
+BT /F1 10.00 Tf 54.00 606.60 Td (Default local path:) Tj ET
+BT /F3 8.50 Tf 54.00 573.00 Td (models/llama3) Tj ET
+BT /F1 10.00 Tf 54.00 540.90 Td (Use a different Hugging Face repo:) Tj ET
+BT /F3 8.50 Tf 54.00 507.30 Td (python scripts/download_llama.py --repo-id "org/model-name") Tj ET
+BT /F1 10.00 Tf 54.00 475.20 Td (Use a different local directory:) Tj ET
+BT /F3 8.50 Tf 54.00 441.60 Td (python scripts/download_llama.py --local-dir "models/custom-model") Tj ET
+BT /F1 10.00 Tf 54.00 409.50 Td (Authentication:) Tj ET
+BT /F3 8.50 Tf 54.00 375.90 Td (hf auth login) Tj ET
+BT /F1 10.00 Tf 54.00 343.80 Td (Environment token option:) Tj ET
+BT /F3 8.50 Tf 54.00 310.20 Td (export HF_TOKEN="your-token") Tj ET
+BT /F1 10.00 Tf 54.00 278.10 Td (Notes:) Tj ET
+BT /F1 10.00 Tf 68.00 254.30 Td (- Some model repositories require license acceptance in Hugging Face.) Tj ET
+BT /F1 10.00 Tf 68.00 240.30 Td (- The runtime expects a local model directory before inference.) Tj ET
+BT /F2 15.00 Tf 54.00 211.50 Td (Run A Prompt) Tj ET
+BT /F1 10.00 Tf 54.00 178.70 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 145.10 Td (convera run --prompt "Explain neural networks in detail.") Tj ET
+BT /F1 10.00 Tf 54.00 113.00 Td (Optional model path:) Tj ET
+BT /F3 8.50 Tf 54.00 79.40 Td (convera run --model-path "models/llama3" --prompt "Explain neural networks in detail.") Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 2275 >>
+stream
+BT /F1 10.00 Tf 54.00 738.00 Td (Optional generation length:) Tj ET
+BT /F3 8.50 Tf 54.00 704.40 Td (convera run --prompt "Explain neural networks in detail." --max-new-tokens 64) Tj ET
+BT /F1 10.00 Tf 54.00 672.30 Td (Optional precision:) Tj ET
+BT /F3 8.50 Tf 54.00 638.70 Td (convera run --precision auto --prompt "Explain neural networks in detail.") Tj ET
+BT /F3 8.50 Tf 54.00 626.20 Td (convera run --precision fp16 --prompt "Explain neural networks in detail.") Tj ET
+BT /F3 8.50 Tf 54.00 613.70 Td (convera run --precision int8 --prompt "Explain neural networks in detail.") Tj ET
+BT /F3 8.50 Tf 54.00 601.20 Td (convera run --precision int4 --prompt "Explain neural networks in detail.") Tj ET
+BT /F1 10.00 Tf 54.00 569.10 Td (Quantized modes require compatible local hardware and dependencies. Unsupported modes fall back) Tj ET
+BT /F1 10.00 Tf 54.00 555.10 Td (safely.) Tj ET
+BT /F1 10.00 Tf 54.00 531.30 Td (Output includes:) Tj ET
+BT /F1 10.00 Tf 68.00 507.50 Td (- Generated text.) Tj ET
+BT /F1 10.00 Tf 68.00 493.50 Td (- Latency.) Tj ET
+BT /F1 10.00 Tf 68.00 479.50 Td (- Tokens per second.) Tj ET
+BT /F1 10.00 Tf 68.00 465.50 Td (- KV cache hit or miss.) Tj ET
+BT /F1 10.00 Tf 68.00 451.50 Td (- Compute avoided percentage.) Tj ET
+BT /F1 10.00 Tf 68.00 437.50 Td (- Actual precision.) Tj ET
+BT /F1 10.00 Tf 68.00 423.50 Td (- Validation status when validation mode is enabled or a cache hit is served.) Tj ET
+BT /F1 10.00 Tf 68.00 409.50 Td (- Backend.) Tj ET
+BT /F1 10.00 Tf 68.00 395.50 Td (- Memory.) Tj ET
+BT /F2 15.00 Tf 54.00 366.70 Td (Interactive CLI Mode) Tj ET
+BT /F1 10.00 Tf 54.00 333.90 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 300.30 Td (convera run) Tj ET
+BT /F1 10.00 Tf 54.00 268.20 Td (Usage:) Tj ET
+BT /F1 10.00 Tf 54.00 244.40 Td (1. Wait for the CONVERA >> prompt.) Tj ET
+BT /F1 10.00 Tf 54.00 230.40 Td (2. Type a prompt.) Tj ET
+BT /F1 10.00 Tf 54.00 216.40 Td (3. Press Enter.) Tj ET
+BT /F1 10.00 Tf 54.00 202.40 Td (4. Repeat as needed.) Tj ET
+BT /F1 10.00 Tf 54.00 188.40 Td (5. Type exit or quit to stop.) Tj ET
+BT /F2 15.00 Tf 54.00 159.60 Td (Encode Model Weights) Tj ET
+BT /F1 10.00 Tf 54.00 126.80 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 93.20 Td (convera encode) Tj ET
+BT /F1 10.00 Tf 54.00 61.10 Td (Optional model path:) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 1771 >>
+stream
+BT /F3 8.50 Tf 54.00 728.20 Td (convera encode --model-path "models/llama3") Tj ET
+BT /F1 10.00 Tf 54.00 696.10 Td (Purpose:) Tj ET
+BT /F1 10.00 Tf 68.00 672.30 Td (- Loads the model.) Tj ET
+BT /F1 10.00 Tf 68.00 658.30 Td (- Stores tensors through the public CONVERA weight encoding path.) Tj ET
+BT /F1 10.00 Tf 68.00 644.30 Td (- Reports tensor count and redundancy ratio.) Tj ET
+BT /F1 10.00 Tf 54.00 620.50 Td (This command uses public-safe fixed-size storage. It does not expose private runtime methods.) Tj ET
+BT /F2 15.00 Tf 54.00 591.70 Td (Full Benchmark Suite) Tj ET
+BT /F1 10.00 Tf 54.00 558.90 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 525.30 Td (convera benchmark) Tj ET
+BT /F1 10.00 Tf 54.00 493.20 Td (Equivalent module command:) Tj ET
+BT /F3 8.50 Tf 54.00 459.60 Td (python -m benchmarks.benchmark) Tj ET
+BT /F1 10.00 Tf 54.00 427.50 Td (Optional model path:) Tj ET
+BT /F3 8.50 Tf 54.00 393.90 Td (python -m benchmarks.benchmark --model-path "models/llama3") Tj ET
+BT /F1 10.00 Tf 54.00 361.80 Td (Optional telemetry:) Tj ET
+BT /F3 8.50 Tf 54.00 328.20 Td (python -m benchmarks.benchmark --send-telemetry) Tj ET
+BT /F1 10.00 Tf 54.00 296.10 Td (Reports:) Tj ET
+BT /F1 10.00 Tf 68.00 272.30 Td (- Cold run.) Tj ET
+BT /F1 10.00 Tf 68.00 258.30 Td (- Warm run.) Tj ET
+BT /F1 10.00 Tf 68.00 244.30 Td (- Variation run.) Tj ET
+BT /F1 10.00 Tf 68.00 230.30 Td (- Speedup summary.) Tj ET
+BT /F1 10.00 Tf 68.00 216.30 Td (- Disk growth.) Tj ET
+BT /F1 10.00 Tf 68.00 202.30 Td (- Generated report path.) Tj ET
+BT /F2 15.00 Tf 54.00 173.50 Td (Public Repeated-Prompt Benchmark) Tj ET
+BT /F1 10.00 Tf 54.00 140.70 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 107.10 Td (python -m metrics.benchmark_runner) Tj ET
+BT /F1 10.00 Tf 54.00 75.00 Td (Optional model path:) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 1993 >>
+stream
+BT /F3 8.50 Tf 54.00 728.20 Td (python -m metrics.benchmark_runner --model-path "models/llama3") Tj ET
+BT /F1 10.00 Tf 54.00 696.10 Td (Optional generation length:) Tj ET
+BT /F3 8.50 Tf 54.00 662.50 Td (python -m metrics.benchmark_runner --max-new-tokens 32) Tj ET
+BT /F1 10.00 Tf 54.00 630.40 Td (Optional precision:) Tj ET
+BT /F3 8.50 Tf 54.00 596.80 Td (python -m metrics.benchmark_runner --precision auto) Tj ET
+BT /F1 10.00 Tf 54.00 564.70 Td (Purpose:) Tj ET
+BT /F1 10.00 Tf 68.00 540.90 Td (- Runs repeated and slightly varied prompts.) Tj ET
+BT /F1 10.00 Tf 68.00 526.90 Td (- Reports cache hit status.) Tj ET
+BT /F1 10.00 Tf 68.00 512.90 Td (- Reports latency in milliseconds.) Tj ET
+BT /F1 10.00 Tf 68.00 498.90 Td (- Summarizes average latency and repeated-run improvement.) Tj ET
+BT /F1 10.00 Tf 68.00 484.90 Td (- Saves benchmark JSON and graph images.) Tj ET
+BT /F1 10.00 Tf 68.00 470.90 Td (- Reports tokens computed, tokens reused, compute avoided percentage, and selected precision.) Tj ET
+BT /F1 10.00 Tf 68.00 456.90 Td (- Reports validation count and validation overhead when records are generated.) Tj ET
+BT /F1 10.00 Tf 54.00 433.10 Td (Public-safe output only:) Tj ET
+BT /F3 8.50 Tf 54.00 399.50 Td (Cached: True or False) Tj ET
+BT /F3 8.50 Tf 54.00 387.00 Td (Latency: N ms) Tj ET
+BT /F1 10.00 Tf 54.00 354.90 Td (Generated files:) Tj ET
+BT /F3 8.50 Tf 54.00 321.30 Td (metrics/output/benchmark.json) Tj ET
+BT /F3 8.50 Tf 54.00 308.80 Td (metrics/output/benchmark.png) Tj ET
+BT /F3 8.50 Tf 54.00 296.30 Td (metrics/output/comparison.png) Tj ET
+BT /F2 15.00 Tf 54.00 259.20 Td (Run The Local UI) Tj ET
+BT /F1 10.00 Tf 54.00 226.40 Td (Command:) Tj ET
+BT /F3 8.50 Tf 54.00 192.80 Td (uvicorn ui.app:app --reload) Tj ET
+BT /F1 10.00 Tf 54.00 160.70 Td (Open:) Tj ET
+BT /F3 8.50 Tf 54.00 127.10 Td (http://127.0.0.1:8000/static/index.html) Tj ET
+BT /F1 10.00 Tf 54.00 95.00 Td (Health endpoint:) Tj ET
+BT /F3 8.50 Tf 54.00 61.40 Td (curl http://127.0.0.1:8000/health) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 2082 >>
+stream
+BT /F1 10.00 Tf 54.00 728.20 Td (Metrics endpoint:) Tj ET
+BT /F3 8.50 Tf 54.00 694.60 Td (curl http://127.0.0.1:8000/metrics) Tj ET
+BT /F1 10.00 Tf 54.00 662.50 Td (Status endpoint:) Tj ET
+BT /F3 8.50 Tf 54.00 628.90 Td (curl http://127.0.0.1:8000/status) Tj ET
+BT /F1 10.00 Tf 54.00 596.80 Td (Benchmark graph endpoint:) Tj ET
+BT /F3 8.50 Tf 54.00 563.20 Td (curl http://127.0.0.1:8000/benchmark-graph) Tj ET
+BT /F1 10.00 Tf 54.00 531.10 Td (Run endpoint:) Tj ET
+BT /F3 8.50 Tf 54.00 497.50 Td (curl -X POST http://127.0.0.1:8000/run \\) Tj ET
+BT /F3 8.50 Tf 54.00 485.00 Td (  -H "Content-Type: application/json" \\) Tj ET
+BT /F3 8.50 Tf 54.00 472.50 Td (  -d '{"text":"Explain neural networks in detail.","max_new_tokens":64,"precision":"auto"}') Tj ET
+BT /F2 15.00 Tf 54.00 435.40 Td (Validation Mode) Tj ET
+BT /F1 10.00 Tf 54.00 402.60 Td (Validation mode creates local validation records for route and cache behavior without exposing) Tj ET
+BT /F1 10.00 Tf 54.00 388.60 Td (prompts, outputs, token traces, or private runtime details.) Tj ET
+BT /F1 10.00 Tf 54.00 364.80 Td (Start the UI with validation mode:) Tj ET
+BT /F3 8.50 Tf 54.00 331.20 Td (CONVERA_VERIFICATION_MODE=1 uvicorn ui.app:app --reload) Tj ET
+BT /F1 10.00 Tf 54.00 299.10 Td (Check status:) Tj ET
+BT /F3 8.50 Tf 54.00 265.50 Td (curl http://127.0.0.1:8000/status) Tj ET
+BT /F2 15.00 Tf 54.00 228.40 Td (Audit Mode) Tj ET
+BT /F1 10.00 Tf 54.00 195.60 Td (Audit mode creates redacted local traces for each request. Traces include request ID, prompt) Tj ET
+BT /F1 10.00 Tf 54.00 181.60 Td (hash, route mode, precision, latency, token counts, compute avoided percentage, and validation) Tj ET
+BT /F1 10.00 Tf 54.00 167.60 Td (status.) Tj ET
+BT /F1 10.00 Tf 54.00 143.80 Td (Audit traces do not include prompts, generated outputs, raw tokens, local paths, private) Tj ET
+BT /F1 10.00 Tf 54.00 129.80 Td (formulas, or private runtime internals.) Tj ET
+BT /F1 10.00 Tf 54.00 106.00 Td (Enable audit mode for every UI run:) Tj ET
+BT /F3 8.50 Tf 54.00 72.40 Td (CONVERA_AUDIT_MODE=1 uvicorn ui.app:app --reload) Tj ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 1855 >>
+stream
+BT /F1 10.00 Tf 54.00 728.20 Td (The UI also has an Audit trace checkbox for per-request trace capture.) Tj ET
+BT /F1 10.00 Tf 54.00 704.40 Td (Latest execution record:) Tj ET
+BT /F3 8.50 Tf 54.00 670.80 Td (curl http://127.0.0.1:8000/api/execution/latest) Tj ET
+BT /F1 10.00 Tf 54.00 638.70 Td (Specific execution record:) Tj ET
+BT /F3 8.50 Tf 54.00 605.10 Td (curl http://127.0.0.1:8000/api/execution/<request_id>) Tj ET
+BT /F1 10.00 Tf 54.00 573.00 Td (Audit trace:) Tj ET
+BT /F3 8.50 Tf 54.00 539.40 Td (curl http://127.0.0.1:8000/audit/<request_id>) Tj ET
+BT /F1 10.00 Tf 54.00 507.30 Td (Export audit trace as JSON:) Tj ET
+BT /F3 8.50 Tf 54.00 473.70 Td (curl http://127.0.0.1:8000/audit/<request_id>/export?format=json) Tj ET
+BT /F1 10.00 Tf 54.00 441.60 Td (Export audit trace as CSV:) Tj ET
+BT /F3 8.50 Tf 54.00 408.00 Td (curl http://127.0.0.1:8000/audit/<request_id>/export?format=csv) Tj ET
+BT /F2 15.00 Tf 54.00 370.90 Td (Telemetry Commands) Tj ET
+BT /F1 10.00 Tf 54.00 338.10 Td (Telemetry is opt-in. Configure:) Tj ET
+BT /F3 8.50 Tf 54.00 304.50 Td (export CONVERA_METRICS_API_URL="https://your-server.example/api/convera/metrics") Tj ET
+BT /F3 8.50 Tf 54.00 292.00 Td (export CONVERA_METRICS_API_KEY="your-api-key") Tj ET
+BT /F1 10.00 Tf 54.00 259.90 Td (Enable telemetry for benchmark:) Tj ET
+BT /F3 8.50 Tf 54.00 226.30 Td (python -m benchmarks.benchmark --send-telemetry) Tj ET
+BT /F1 10.00 Tf 54.00 194.20 Td (Privacy:) Tj ET
+BT /F1 10.00 Tf 68.00 170.40 Td (- No prompts.) Tj ET
+BT /F1 10.00 Tf 68.00 156.40 Td (- No outputs.) Tj ET
+BT /F1 10.00 Tf 68.00 142.40 Td (- No local paths.) Tj ET
+BT /F1 10.00 Tf 68.00 128.40 Td (- No file names.) Tj ET
+BT /F1 10.00 Tf 68.00 114.40 Td (- No raw tokens.) Tj ET
+BT /F1 10.00 Tf 68.00 100.40 Td (- No cache contents.) Tj ET
+BT /F2 15.00 Tf 54.00 71.60 Td (Useful Environment Variables) Tj ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 18 0 R >>
+endobj
+20 0 obj
+<< /Length 2201 >>
+stream
+BT /F3 8.50 Tf 54.00 728.20 Td (CONVERA_CHUNK_SIZE            Default tensor chunk size) Tj ET
+BT /F3 8.50 Tf 54.00 715.70 Td (CONVERA_KV_CHUNK_SIZE         KV tensor chunk size) Tj ET
+BT /F3 8.50 Tf 54.00 703.20 Td (CONVERA_MAX_NEW_TOKENS        Default generation length) Tj ET
+BT /F3 8.50 Tf 54.00 690.70 Td (CONVERA_TELEMETRY             Set to 1 for telemetry-aware paths) Tj ET
+BT /F3 8.50 Tf 54.00 678.20 Td (CONVERA_MODEL_REPO            Model repo for scripts/download_llama.py) Tj ET
+BT /F3 8.50 Tf 54.00 665.70 Td (HF_TOKEN                      Hugging Face access token) Tj ET
+BT /F3 8.50 Tf 54.00 653.20 Td (CONVERA_METRICS_API_URL       Metrics endpoint) Tj ET
+BT /F3 8.50 Tf 54.00 640.70 Td (CONVERA_METRICS_API_KEY       Metrics API key) Tj ET
+BT /F2 15.00 Tf 54.00 603.60 Td (Troubleshooting) Tj ET
+BT /F2 12.00 Tf 54.00 570.80 Td (Model path does not exist) Tj ET
+BT /F1 10.00 Tf 54.00 541.00 Td (Run:) Tj ET
+BT /F3 8.50 Tf 54.00 507.40 Td (python scripts/download_llama.py) Tj ET
+BT /F1 10.00 Tf 54.00 475.30 Td (Or provide a local model path:) Tj ET
+BT /F3 8.50 Tf 54.00 441.70 Td (convera run --model-path "models/custom-model" --prompt "Hello") Tj ET
+BT /F2 12.00 Tf 54.00 409.60 Td (Hugging Face access denied) Tj ET
+BT /F1 10.00 Tf 54.00 379.80 Td (Check:) Tj ET
+BT /F1 10.00 Tf 68.00 356.00 Td (- You are logged in with hf auth login.) Tj ET
+BT /F1 10.00 Tf 68.00 342.00 Td (- You accepted the model license.) Tj ET
+BT /F1 10.00 Tf 68.00 328.00 Td (- HF_TOKEN is set if running non-interactively.) Tj ET
+BT /F2 12.00 Tf 54.00 304.20 Td (UI starts but inference fails) Tj ET
+BT /F1 10.00 Tf 54.00 274.40 Td (Check:) Tj ET
+BT /F1 10.00 Tf 68.00 250.60 Td (- models/llama3 exists.) Tj ET
+BT /F1 10.00 Tf 68.00 236.60 Td (- Dependencies are installed.) Tj ET
+BT /F1 10.00 Tf 68.00 222.60 Td (- The model fits available CPU/GPU memory.) Tj ET
+BT /F2 12.00 Tf 54.00 198.80 Td (Telemetry does not send) Tj ET
+BT /F1 10.00 Tf 54.00 169.00 Td (Check:) Tj ET
+BT /F1 10.00 Tf 68.00 145.20 Td (- CONVERA_METRICS_API_URL is set.) Tj ET
+BT /F1 10.00 Tf 68.00 131.20 Td (- CONVERA_METRICS_API_KEY is set.) Tj ET
+BT /F1 10.00 Tf 68.00 117.20 Td (- The server accepts bearer-token auth.) Tj ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 20 0 R >>
+endobj
+xref
+0 22
+0000000000 65535 f
+0000000015 00000 n
+0000000064 00000 n
+0000000169 00000 n
+0000000239 00000 n
+0000000314 00000 n
+0000000382 00000 n
+0000002258 00000 n
+0000002404 00000 n
+0000004053 00000 n
+0000004199 00000 n
+0000006527 00000 n
+0000006675 00000 n
+0000008499 00000 n
+0000008647 00000 n
+0000010693 00000 n
+0000010841 00000 n
+0000012976 00000 n
+0000013124 00000 n
+0000015032 00000 n
+0000015180 00000 n
+0000017434 00000 n
+trailer
+<< /Size 22 /Root 1 0 R >>
+startxref
+17582
+%%EOF

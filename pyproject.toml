@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "convera"
+version = "0.1.0"
+description = "CONVERA OSS inference runtime with lite reusable-state storage."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "torch",
+  "transformers",
+  "accelerate",
+  "numpy",
+  "fastapi",
+  "uvicorn",
+  "requests",
+  "reportlab",
+  "huggingface_hub",
+  "matplotlib",
+]
+
+[project.scripts]
+convera = "cli.main:main"
+
+[tool.setuptools]
+include-package-data = true
+py-modules = ["config", "main"]
+
+[tool.setuptools.packages.find]
+include = [
+  "benchmarks*",
+  "audit*",
+  "cli*",
+  "convera_core_api*",
+  "core*",
+  "inference*",
+  "metrics*",
+  "network*",
+  "convera_store_lite*",
+  "convera_store*",
+  "scripts*",
+  "telemetry*",
+  "ui*",
+  "weight_encoding*",
+]
+
+[tool.setuptools.package-data]
+ui = ["static/*.html"]

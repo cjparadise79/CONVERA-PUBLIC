@@ -1,0 +1,368 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R] /Count 8 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+6 0 obj
+<< /Length 2920 >>
+stream
+BT /F2 20.00 Tf 54.00 738.00 Td (CONVERA Project Report) Tj ET
+BT /F2 15.00 Tf 54.00 695.20 Td (Purpose) Tj ET
+BT /F1 10.00 Tf 54.00 662.40 Td (CONVERA is a local LLM inference runtime focused on reducing repeated work across runs. The) Tj ET
+BT /F1 10.00 Tf 54.00 648.40 Td (public project is intentionally a lite open-core runtime. It provides a real execution loop,) Tj ET
+BT /F1 10.00 Tf 54.00 634.40 Td (local model loading, persistent reusable state, benchmark tools, a FastAPI dashboard, and a) Tj ET
+BT /F1 10.00 Tf 54.00 620.40 Td (privacy-first telemetry contract.) Tj ET
+BT /F1 10.00 Tf 54.00 596.60 Td (The public repository does not include private acceleration systems. It exposes a narrow public) Tj ET
+BT /F1 10.00 Tf 54.00 582.60 Td (API boundary and keeps internal research and non-public optimization work out of the public) Tj ET
+BT /F1 10.00 Tf 54.00 568.60 Td (tree.) Tj ET
+BT /F2 15.00 Tf 54.00 539.80 Td (What The Project Does) Tj ET
+BT /F1 10.00 Tf 54.00 507.00 Td (CONVERA runs Hugging Face causal language models from a local model directory. During inference,) Tj ET
+BT /F1 10.00 Tf 54.00 493.00 Td (it records high-level runtime state and stores reusable artifacts in a local content-addressed) Tj ET
+BT /F1 10.00 Tf 54.00 479.00 Td (tensor store. On repeated prompts, the runtime can reuse persisted KV state and report whether a) Tj ET
+BT /F1 10.00 Tf 54.00 465.00 Td (request was served with a cache hit.) Tj ET
+BT /F1 10.00 Tf 54.00 441.20 Td (The project also includes:) Tj ET
+BT /F1 10.00 Tf 68.00 417.40 Td (- A command line interface.) Tj ET
+BT /F1 10.00 Tf 68.00 403.40 Td (- A local web dashboard.) Tj ET
+BT /F1 10.00 Tf 68.00 389.40 Td (- A benchmark harness.) Tj ET
+BT /F1 10.00 Tf 68.00 375.40 Td (- A metrics-only telemetry payload builder.) Tj ET
+BT /F1 10.00 Tf 68.00 361.40 Td (- A public repeated-prompt benchmark.) Tj ET
+BT /F1 10.00 Tf 68.00 347.40 Td (- A server telemetry handoff document.) Tj ET
+BT /F1 10.00 Tf 68.00 333.40 Td (- A public/private boundary document.) Tj ET
+BT /F1 10.00 Tf 68.00 319.40 Td (- A public execution inspector.) Tj ET
+BT /F1 10.00 Tf 68.00 305.40 Td (- Optional audit trace export.) Tj ET
+BT /F2 15.00 Tf 54.00 276.60 Td (Current Public Systems) Tj ET
+BT /F2 12.00 Tf 54.00 243.80 Td (Model Loading) Tj ET
+BT /F1 10.00 Tf 54.00 214.00 Td (Model loading lives in core/model_loader.py. It loads a tokenizer and AutoModelForCausalLM from) Tj ET
+BT /F1 10.00 Tf 54.00 200.00 Td (the configured local model path. The default model path is:) Tj ET
+BT /F3 8.50 Tf 54.00 166.40 Td (models/llama3) Tj ET
+BT /F1 10.00 Tf 54.00 134.30 Td (The loader uses Hugging Face Transformers and can use automatic device mapping when supported by) Tj ET
+BT /F1 10.00 Tf 54.00 120.30 Td (the local environment.) Tj ET
+BT /F2 12.00 Tf 54.00 96.50 Td (Inference Engine) Tj ET
+BT /F1 10.00 Tf 54.00 66.70 Td (The inference engine lives in inference/engine.py.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 2728 >>
+stream
+BT /F1 10.00 Tf 54.00 738.00 Td (Main responsibilities:) Tj ET
+BT /F1 10.00 Tf 68.00 714.20 Td (- Tokenize the prompt.) Tj ET
+BT /F1 10.00 Tf 68.00 700.20 Td (- Move inputs to the selected backend.) Tj ET
+BT /F1 10.00 Tf 68.00 686.20 Td (- Check persistent KV state.) Tj ET
+BT /F1 10.00 Tf 68.00 672.20 Td (- Run generation.) Tj ET
+BT /F1 10.00 Tf 68.00 658.20 Td (- Store prompt KV state after execution.) Tj ET
+BT /F1 10.00 Tf 68.00 644.20 Td (- Return decoded text and runtime stats.) Tj ET
+BT /F1 10.00 Tf 54.00 620.40 Td (The returned stats include:) Tj ET
+BT /F1 10.00 Tf 68.00 596.60 Td (- Latency.) Tj ET
+BT /F1 10.00 Tf 68.00 582.60 Td (- Tokens generated.) Tj ET
+BT /F1 10.00 Tf 68.00 568.60 Td (- Tokens per second.) Tj ET
+BT /F1 10.00 Tf 68.00 554.60 Td (- KV cache hit status.) Tj ET
+BT /F1 10.00 Tf 68.00 540.60 Td (- Backend name.) Tj ET
+BT /F1 10.00 Tf 68.00 526.60 Td (- Memory use.) Tj ET
+BT /F1 10.00 Tf 68.00 512.60 Td (- Requested and actual precision.) Tj ET
+BT /F1 10.00 Tf 68.00 498.60 Td (- Tokens reused.) Tj ET
+BT /F1 10.00 Tf 68.00 484.60 Td (- Tokens computed.) Tj ET
+BT /F1 10.00 Tf 68.00 470.60 Td (- Compute avoided percentage.) Tj ET
+BT /F1 10.00 Tf 68.00 456.60 Td (- Execution route mode.) Tj ET
+BT /F1 10.00 Tf 68.00 442.60 Td (- Validation status and validation latency.) Tj ET
+BT /F1 10.00 Tf 68.00 428.60 Td (- Fallback reason, when applicable.) Tj ET
+BT /F2 12.00 Tf 54.00 404.80 Td (KV Manager) Tj ET
+BT /F1 10.00 Tf 54.00 375.00 Td (The KV manager lives in inference/kv_manager.py.) Tj ET
+BT /F1 10.00 Tf 54.00 351.20 Td (Main responsibilities:) Tj ET
+BT /F1 10.00 Tf 68.00 327.40 Td (- Hash prompt token IDs.) Tj ET
+BT /F1 10.00 Tf 68.00 313.40 Td (- Look up previously stored KV state.) Tj ET
+BT /F1 10.00 Tf 68.00 299.40 Td (- Persist KV tensors through the CONVERA tensor store.) Tj ET
+BT /F1 10.00 Tf 68.00 285.40 Td (- Track hit and miss counts.) Tj ET
+BT /F1 10.00 Tf 68.00 271.40 Td (- Maintain a small in-process cache for recently used state.) Tj ET
+BT /F2 12.00 Tf 54.00 247.60 Td (CONVERA Store Lite) Tj ET
+BT /F1 10.00 Tf 54.00 217.80 Td (The lite store lives in convera_store_lite/.) Tj ET
+BT /F1 10.00 Tf 54.00 194.00 Td (Main responsibilities:) Tj ET
+BT /F1 10.00 Tf 68.00 170.20 Td (- Split tensor bytes into fixed-size chunks.) Tj ET
+BT /F1 10.00 Tf 68.00 156.20 Td (- Hash chunks.) Tj ET
+BT /F1 10.00 Tf 68.00 142.20 Td (- Store compressed chunk payloads on disk.) Tj ET
+BT /F1 10.00 Tf 68.00 128.20 Td (- Reuse chunks when the same payload appears again.) Tj ET
+BT /F1 10.00 Tf 68.00 114.20 Td (- Reconstruct tensors exactly from stored manifests.) Tj ET
+BT /F1 10.00 Tf 54.00 90.40 Td (Default storage paths:) Tj ET
+BT /F3 8.50 Tf 54.00 56.80 Td (data/chunks) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 2414 >>
+stream
+BT /F3 8.50 Tf 54.00 738.00 Td (data/index) Tj ET
+BT /F2 12.00 Tf 54.00 705.90 Td (CONVERA Tensor Store) Tj ET
+BT /F1 10.00 Tf 54.00 676.10 Td (The tensor store facade lives in convera_store/.) Tj ET
+BT /F1 10.00 Tf 54.00 652.30 Td (It provides a higher-level interface for storing and loading tensors. It uses convera_store_lite) Tj ET
+BT /F1 10.00 Tf 54.00 638.30 Td (under the public runtime.) Tj ET
+BT /F2 12.00 Tf 54.00 614.50 Td (Public API Boundary) Tj ET
+BT /F1 10.00 Tf 54.00 584.70 Td (The public API boundary lives in convera_core_api/interface.py.) Tj ET
+BT /F1 10.00 Tf 54.00 560.90 Td (Exposed functions:) Tj ET
+BT /F3 8.50 Tf 54.00 527.30 Td (store_tensor\(tensor\)) Tj ET
+BT /F3 8.50 Tf 54.00 514.80 Td (load_tensor\(refs\)) Tj ET
+BT /F3 8.50 Tf 54.00 502.30 Td (optimize_kv\(kv_tensor\)) Tj ET
+BT /F3 8.50 Tf 54.00 489.80 Td (merge_states\(state_a, state_b\)) Tj ET
+BT /F1 10.00 Tf 54.00 457.70 Td (The public implementation returns tensors, references, and simple metadata only.) Tj ET
+BT /F2 12.00 Tf 54.00 433.90 Td (Backend Selection) Tj ET
+BT /F1 10.00 Tf 54.00 404.10 Td (Backend support lives in core/.) Tj ET
+BT /F1 10.00 Tf 54.00 380.30 Td (The project includes backend modules for:) Tj ET
+BT /F1 10.00 Tf 68.00 356.50 Td (- CPU.) Tj ET
+BT /F1 10.00 Tf 68.00 342.50 Td (- CUDA.) Tj ET
+BT /F1 10.00 Tf 68.00 328.50 Td (- MPS.) Tj ET
+BT /F1 10.00 Tf 68.00 314.50 Td (- ROCm-compatible PyTorch.) Tj ET
+BT /F1 10.00 Tf 54.00 290.70 Td (The selected backend is used by the inference engine for moving inputs and reporting runtime) Tj ET
+BT /F1 10.00 Tf 54.00 276.70 Td (memory.) Tj ET
+BT /F2 12.00 Tf 54.00 252.90 Td (Runtime Precision) Tj ET
+BT /F1 10.00 Tf 54.00 223.10 Td (CONVERA includes a public multi-precision loading path. Supported requested modes are:) Tj ET
+BT /F1 10.00 Tf 68.00 199.30 Td (- fp16) Tj ET
+BT /F1 10.00 Tf 68.00 185.30 Td (- int8) Tj ET
+BT /F1 10.00 Tf 68.00 171.30 Td (- int4) Tj ET
+BT /F1 10.00 Tf 68.00 157.30 Td (- auto) Tj ET
+BT /F1 10.00 Tf 54.00 133.50 Td (Quantized modes use Hugging Face quantization loading paths when supported by the local hardware) Tj ET
+BT /F1 10.00 Tf 54.00 119.50 Td (and installed dependencies. Unsupported modes fall back safely instead of crashing the runtime.) Tj ET
+BT /F2 12.00 Tf 54.00 95.70 Td (Execution Router) Tj ET
+BT /F1 10.00 Tf 54.00 65.90 Td (The public execution router lives in inference/execution_router.py.) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 2590 >>
+stream
+BT /F1 10.00 Tf 54.00 738.00 Td (It produces deterministic public route modes:) Tj ET
+BT /F3 8.50 Tf 54.00 704.40 Td (cache) Tj ET
+BT /F3 8.50 Tf 54.00 691.90 Td (kv) Tj ET
+BT /F3 8.50 Tf 54.00 679.40 Td (full) Tj ET
+BT /F1 10.00 Tf 54.00 647.30 Td (The router is intentionally simple in the public runtime. It reports what path was selected) Tj ET
+BT /F1 10.00 Tf 54.00 633.30 Td (without exposing private decision logic, scoring formulas, or intermediate states.) Tj ET
+BT /F2 12.00 Tf 54.00 609.50 Td (Cache Validation Records) Tj ET
+BT /F1 10.00 Tf 54.00 579.70 Td (The public validation layer lives in inference/cache_validator.py.) Tj ET
+BT /F1 10.00 Tf 54.00 555.90 Td (It creates lightweight validation records for cached responses and validation-mode runs. Records) Tj ET
+BT /F1 10.00 Tf 54.00 541.90 Td (include prompt and response hashes, timestamp, and method name. They do not include prompts,) Tj ET
+BT /F1 10.00 Tf 54.00 527.90 Td (outputs, token traces, cache contents, or private runtime details.) Tj ET
+BT /F1 10.00 Tf 54.00 504.10 Td (Validation records are stored locally at:) Tj ET
+BT /F3 8.50 Tf 54.00 470.50 Td (data/index/validation_records.json) Tj ET
+BT /F1 10.00 Tf 54.00 438.40 Td (Validation mode can be enabled with:) Tj ET
+BT /F3 8.50 Tf 54.00 404.80 Td (CONVERA_VERIFICATION_MODE=1 uvicorn ui.app:app --reload) Tj ET
+BT /F2 12.00 Tf 54.00 372.70 Td (Adaptive Routing Model) Tj ET
+BT /F1 10.00 Tf 54.00 342.90 Td (The public adaptive routing model lives in inference/routing_model.py.) Tj ET
+BT /F1 10.00 Tf 54.00 319.10 Td (It learns from public-safe runtime outcomes:) Tj ET
+BT /F1 10.00 Tf 68.00 295.30 Td (- route mode) Tj ET
+BT /F1 10.00 Tf 68.00 281.30 Td (- cache hit status) Tj ET
+BT /F1 10.00 Tf 68.00 267.30 Td (- latency) Tj ET
+BT /F1 10.00 Tf 68.00 253.30 Td (- tokens reused) Tj ET
+BT /F1 10.00 Tf 68.00 239.30 Td (- tokens computed) Tj ET
+BT /F1 10.00 Tf 68.00 225.30 Td (- compute avoided percentage) Tj ET
+BT /F1 10.00 Tf 54.00 201.50 Td (The model is conservative. It only proposes public route modes after enough local history exists) Tj ET
+BT /F1 10.00 Tf 54.00 187.50 Td (and otherwise falls back to deterministic routing. It does not expose private scoring formulas,) Tj ET
+BT /F1 10.00 Tf 54.00 173.50 Td (private decision logic, prompts, outputs, or token traces.) Tj ET
+BT /F1 10.00 Tf 54.00 149.70 Td (Runtime outcome history is stored at:) Tj ET
+BT /F3 8.50 Tf 54.00 116.10 Td (data/learning_history.json) Tj ET
+BT /F3 8.50 Tf 54.00 103.60 Td (data/routing_model.json) Tj ET
+BT /F2 12.00 Tf 54.00 71.50 Td (Execution Inspector) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 2373 >>
+stream
+BT /F1 10.00 Tf 54.00 738.00 Td (The public execution inspector lives in inference/execution_inspector.py.) Tj ET
+BT /F1 10.00 Tf 54.00 714.20 Td (It records the high-level request path:) Tj ET
+BT /F1 10.00 Tf 68.00 690.40 Td (- routing) Tj ET
+BT /F1 10.00 Tf 68.00 676.40 Td (- precision) Tj ET
+BT /F1 10.00 Tf 68.00 662.40 Td (- execution) Tj ET
+BT /F1 10.00 Tf 68.00 648.40 Td (- validation) Tj ET
+BT /F1 10.00 Tf 54.00 624.60 Td (Records are stored at:) Tj ET
+BT /F3 8.50 Tf 54.00 591.00 Td (data/execution_records.json) Tj ET
+BT /F1 10.00 Tf 54.00 558.90 Td (The UI can retrieve the latest record or a record by request ID.) Tj ET
+BT /F2 12.00 Tf 54.00 535.10 Td (Audit Trace Export) Tj ET
+BT /F1 10.00 Tf 54.00 505.30 Td (The audit system lives in:) Tj ET
+BT /F3 8.50 Tf 54.00 471.70 Td (audit/audit_logger.py) Tj ET
+BT /F3 8.50 Tf 54.00 459.20 Td (audit/exporter.py) Tj ET
+BT /F1 10.00 Tf 54.00 427.10 Td (Audit mode records redacted execution traces. Trace fields include request ID, prompt hash,) Tj ET
+BT /F1 10.00 Tf 54.00 413.10 Td (route mode, precision, latency, token counts, compute avoided percentage, and validation status.) Tj ET
+BT /F1 10.00 Tf 54.00 389.30 Td (Audit traces do not include prompts, generated outputs, raw tokens, local paths, private) Tj ET
+BT /F1 10.00 Tf 54.00 375.30 Td (formulas, or private runtime internals.) Tj ET
+BT /F1 10.00 Tf 54.00 351.50 Td (Enable audit mode for every request:) Tj ET
+BT /F3 8.50 Tf 54.00 317.90 Td (CONVERA_AUDIT_MODE=1 uvicorn ui.app:app --reload) Tj ET
+BT /F1 10.00 Tf 54.00 285.80 Td (The UI also supports per-request audit traces through the Audit trace checkbox.) Tj ET
+BT /F2 12.00 Tf 54.00 262.00 Td (Benchmarks) Tj ET
+BT /F1 10.00 Tf 54.00 232.20 Td (Benchmark tools live in:) Tj ET
+BT /F3 8.50 Tf 54.00 198.60 Td (benchmarks/) Tj ET
+BT /F3 8.50 Tf 54.00 186.10 Td (metrics/benchmark_runner.py) Tj ET
+BT /F1 10.00 Tf 54.00 154.00 Td (The public benchmark runner demonstrates repeated-prompt behavior using only public-safe) Tj ET
+BT /F1 10.00 Tf 54.00 140.00 Td (measurements:) Tj ET
+BT /F1 10.00 Tf 68.00 116.20 Td (- Cache hit status.) Tj ET
+BT /F1 10.00 Tf 68.00 102.20 Td (- Latency in milliseconds.) Tj ET
+BT /F1 10.00 Tf 68.00 88.20 Td (- Response length.) Tj ET
+BT /F1 10.00 Tf 68.00 74.20 Td (- Benchmark JSON output.) Tj ET
+BT /F1 10.00 Tf 68.00 60.20 Td (- Benchmark graph output.) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 2107 >>
+stream
+BT /F1 10.00 Tf 54.00 738.00 Td (It does not expose token traces, cache contents, KV internals, or private mechanisms.) Tj ET
+BT /F1 10.00 Tf 54.00 714.20 Td (Generated benchmark artifacts are written to:) Tj ET
+BT /F3 8.50 Tf 54.00 680.60 Td (metrics/output/benchmark.json) Tj ET
+BT /F3 8.50 Tf 54.00 668.10 Td (metrics/output/benchmark.png) Tj ET
+BT /F3 8.50 Tf 54.00 655.60 Td (metrics/output/comparison.png) Tj ET
+BT /F2 12.00 Tf 54.00 623.50 Td (Telemetry) Tj ET
+BT /F1 10.00 Tf 54.00 593.70 Td (Telemetry lives in:) Tj ET
+BT /F3 8.50 Tf 54.00 560.10 Td (telemetry/convera_payload.py) Tj ET
+BT /F3 8.50 Tf 54.00 547.60 Td (telemetry/convera_client.py) Tj ET
+BT /F1 10.00 Tf 54.00 515.50 Td (Telemetry is opt-in. The client sends metrics only when these variables are configured:) Tj ET
+BT /F3 8.50 Tf 54.00 481.90 Td (CONVERA_METRICS_API_URL) Tj ET
+BT /F3 8.50 Tf 54.00 469.40 Td (CONVERA_METRICS_API_KEY) Tj ET
+BT /F1 10.00 Tf 54.00 437.30 Td (The payload type is:) Tj ET
+BT /F3 8.50 Tf 54.00 403.70 Td (convera-metrics-only) Tj ET
+BT /F1 10.00 Tf 54.00 371.60 Td (Telemetry does not send prompts, outputs, file names, local paths, model weights, token traces,) Tj ET
+BT /F1 10.00 Tf 54.00 357.60 Td (or cache contents.) Tj ET
+BT /F2 12.00 Tf 54.00 333.80 Td (Local UI) Tj ET
+BT /F1 10.00 Tf 54.00 304.00 Td (The UI is served through FastAPI in ui/app.py and ui/static/index.html.) Tj ET
+BT /F1 10.00 Tf 54.00 280.20 Td (The UI provides:) Tj ET
+BT /F1 10.00 Tf 68.00 256.40 Td (- Prompt input.) Tj ET
+BT /F1 10.00 Tf 68.00 242.40 Td (- Run button.) Tj ET
+BT /F1 10.00 Tf 68.00 228.40 Td (- Output display.) Tj ET
+BT /F1 10.00 Tf 68.00 214.40 Td (- Metrics cards.) Tj ET
+BT /F1 10.00 Tf 68.00 200.40 Td (- Recent run history.) Tj ET
+BT /F1 10.00 Tf 68.00 186.40 Td (- Refresh button.) Tj ET
+BT /F1 10.00 Tf 68.00 172.40 Td (- Benchmark graph display when metrics/output/benchmark.png exists.) Tj ET
+BT /F1 10.00 Tf 54.00 148.60 Td (The local dashboard URL is:) Tj ET
+BT /F3 8.50 Tf 54.00 115.00 Td (http://127.0.0.1:8000/static/index.html) Tj ET
+BT /F2 15.00 Tf 54.00 77.90 Td (Repository Layout) Tj ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 3638 >>
+stream
+BT /F3 8.50 Tf 54.00 728.20 Td (benchmarks/            Benchmark runner and report utilities) Tj ET
+BT /F3 8.50 Tf 54.00 715.70 Td (cli/                   Command line interface) Tj ET
+BT /F3 8.50 Tf 54.00 703.20 Td (convera_core_api/      Public API boundary) Tj ET
+BT /F3 8.50 Tf 54.00 690.70 Td (convera_store/         Tensor store facade) Tj ET
+BT /F3 8.50 Tf 54.00 678.20 Td (convera_store_lite/    Fixed-size public chunk store) Tj ET
+BT /F3 8.50 Tf 54.00 665.70 Td (core/                  Backend and model loading) Tj ET
+BT /F3 8.50 Tf 54.00 653.20 Td (inference/             Engine, KV manager, token graph) Tj ET
+BT /F3 8.50 Tf 54.00 640.70 Td (metrics/               Public repeated-prompt benchmark) Tj ET
+BT /F3 8.50 Tf 54.00 628.20 Td (models/                Local model directory) Tj ET
+BT /F3 8.50 Tf 54.00 615.70 Td (scripts/               Model download helpers) Tj ET
+BT /F3 8.50 Tf 54.00 603.20 Td (telemetry/             Metrics-only payload and client) Tj ET
+BT /F3 8.50 Tf 54.00 590.70 Td (tests/                 Unit tests) Tj ET
+BT /F3 8.50 Tf 54.00 578.20 Td (ui/                    FastAPI app and local dashboard) Tj ET
+BT /F3 8.50 Tf 54.00 565.70 Td (Manuals/               Project manuals and PDFs) Tj ET
+BT /F3 8.50 Tf 54.00 553.20 Td (audit/                 Public audit trace helpers) Tj ET
+BT /F2 15.00 Tf 54.00 516.10 Td (Data Paths) Tj ET
+BT /F1 10.00 Tf 54.00 483.30 Td (Runtime paths are defined in config.py.) Tj ET
+BT /F3 8.50 Tf 54.00 449.70 Td (models/llama3                 Default model path) Tj ET
+BT /F3 8.50 Tf 54.00 437.20 Td (data/chunks                   Stored chunk payloads) Tj ET
+BT /F3 8.50 Tf 54.00 424.70 Td (data/index/kv_index.json      KV mapping index) Tj ET
+BT /F3 8.50 Tf 54.00 412.20 Td (data/index/model_index.json   Model tensor mapping index) Tj ET
+BT /F3 8.50 Tf 54.00 399.70 Td (data/index/token_graph.json   Token graph state) Tj ET
+BT /F3 8.50 Tf 54.00 387.20 Td (data/metrics_history.json     UI metrics history) Tj ET
+BT /F3 8.50 Tf 54.00 374.70 Td (data/learning_history.json    Public adaptive outcome history) Tj ET
+BT /F3 8.50 Tf 54.00 362.20 Td (data/routing_model.json       Public routing model state) Tj ET
+BT /F3 8.50 Tf 54.00 349.70 Td (data/execution_records.json   Public execution inspector records) Tj ET
+BT /F3 8.50 Tf 54.00 337.20 Td (data/audit_logs               Optional redacted audit traces) Tj ET
+BT /F2 15.00 Tf 54.00 300.10 Td (Features) Tj ET
+BT /F1 10.00 Tf 68.00 267.30 Td (- Local Hugging Face model execution.) Tj ET
+BT /F1 10.00 Tf 68.00 253.30 Td (- Prompt-level KV persistence.) Tj ET
+BT /F1 10.00 Tf 68.00 239.30 Td (- Public cache hit reporting.) Tj ET
+BT /F1 10.00 Tf 68.00 225.30 Td (- Local reusable tensor storage.) Tj ET
+BT /F1 10.00 Tf 68.00 211.30 Td (- Fixed-size chunk deduplication.) Tj ET
+BT /F1 10.00 Tf 68.00 197.30 Td (- Backend selection across CPU and supported accelerators.) Tj ET
+BT /F1 10.00 Tf 68.00 183.30 Td (- CLI command surface.) Tj ET
+BT /F1 10.00 Tf 68.00 169.30 Td (- Local FastAPI dashboard.) Tj ET
+BT /F1 10.00 Tf 68.00 155.30 Td (- Benchmark report tooling.) Tj ET
+BT /F1 10.00 Tf 68.00 141.30 Td (- Public repeated-prompt benchmark.) Tj ET
+BT /F1 10.00 Tf 68.00 127.30 Td (- Public benchmark graph generation.) Tj ET
+BT /F1 10.00 Tf 68.00 113.30 Td (- Benchmark graph endpoint for the UI.) Tj ET
+BT /F1 10.00 Tf 68.00 99.30 Td (- Public runtime precision selection.) Tj ET
+BT /F1 10.00 Tf 68.00 85.30 Td (- Deterministic public execution routing.) Tj ET
+BT /F1 10.00 Tf 68.00 71.30 Td (- Lightweight validation records.) Tj ET
+BT /F1 10.00 Tf 68.00 57.30 Td (- Public adaptive routing model.) Tj ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 18 0 R >>
+endobj
+20 0 obj
+<< /Length 1847 >>
+stream
+BT /F1 10.00 Tf 68.00 738.00 Td (- Execution inspector.) Tj ET
+BT /F1 10.00 Tf 68.00 724.00 Td (- Optional audit trace export.) Tj ET
+BT /F1 10.00 Tf 68.00 710.00 Td (- Metrics-only telemetry contract.) Tj ET
+BT /F1 10.00 Tf 68.00 696.00 Td (- Open-core boundary documentation.) Tj ET
+BT /F2 15.00 Tf 54.00 667.20 Td (Security And Privacy Position) Tj ET
+BT /F1 10.00 Tf 54.00 634.40 Td (The public project is designed to avoid exposing private runtime mechanisms. Public telemetry is) Tj ET
+BT /F1 10.00 Tf 54.00 620.40 Td (metrics-only. Public benchmarks do not expose token-level traces or cache contents. The public) Tj ET
+BT /F1 10.00 Tf 54.00 606.40 Td (repository uses neutral names and keeps non-public research systems out of the tree.) Tj ET
+BT /F2 15.00 Tf 54.00 577.60 Td (Current Limitations) Tj ET
+BT /F1 10.00 Tf 68.00 544.80 Td (- A compatible local model must already exist in models/llama3, or be downloaded with the) Tj ET
+BT /F1 10.00 Tf 82.00 530.80 Td (provided helper.) Tj ET
+BT /F1 10.00 Tf 68.00 516.80 Td (- Some Hugging Face models require license acceptance and authentication.) Tj ET
+BT /F1 10.00 Tf 68.00 502.80 Td (- The public runtime is a lite implementation, not a production serving stack.) Tj ET
+BT /F1 10.00 Tf 68.00 488.80 Td (- Generated PDFs are local artifacts and are ignored by default unless force-added to git.) Tj ET
+BT /F2 15.00 Tf 54.00 460.00 Td (Recommended Next Steps) Tj ET
+BT /F1 10.00 Tf 68.00 427.20 Td (- Run the public repeated-prompt benchmark against an available local model.) Tj ET
+BT /F1 10.00 Tf 68.00 413.20 Td (- Capture UI screenshots for GitHub presentation.) Tj ET
+BT /F1 10.00 Tf 68.00 399.20 Td (- Build the server telemetry receiver from SERVER_HAND_OFF.md.) Tj ET
+BT /F1 10.00 Tf 68.00 385.20 Td (- Keep public changes focused on usability, metrics, and documentation.) Tj ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 20 0 R >>
+endobj
+xref
+0 22
+0000000000 65535 f
+0000000015 00000 n
+0000000064 00000 n
+0000000169 00000 n
+0000000239 00000 n
+0000000314 00000 n
+0000000382 00000 n
+0000003354 00000 n
+0000003500 00000 n
+0000006280 00000 n
+0000006426 00000 n
+0000008893 00000 n
+0000009041 00000 n
+0000011684 00000 n
+0000011832 00000 n
+0000014258 00000 n
+0000014406 00000 n
+0000016566 00000 n
+0000016714 00000 n
+0000020405 00000 n
+0000020553 00000 n
+0000022453 00000 n
+trailer
+<< /Size 22 /Root 1 0 R >>
+startxref
+22601
+%%EOF

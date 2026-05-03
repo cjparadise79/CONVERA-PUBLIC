@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CONVERA</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7f8;
+      color: #182026;
+    }
+    body { margin: 0; }
+    main { max-width: 1180px; margin: 0 auto; padding: 28px; }
+    header { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+    h1 { margin: 0; font-size: 32px; letter-spacing: 0; }
+    .tagline { margin: 6px 0 0; color: #53616b; }
+    .grid { display: grid; grid-template-columns: minmax(280px, 420px) 1fr; gap: 18px; margin-top: 24px; }
+    section, form { background: #ffffff; border: 1px solid #d8e0e5; border-radius: 8px; padding: 16px; }
+    textarea { width: 100%; min-height: 160px; resize: vertical; box-sizing: border-box; border-radius: 6px; border: 1px solid #c5d0d7; padding: 12px; font: inherit; }
+    select, input[type="number"] { min-height: 38px; border-radius: 6px; border: 1px solid #c5d0d7; padding: 0 10px; font: inherit; }
+    input[type="number"] { width: 92px; }
+    button { border: 0; border-radius: 6px; background: #186b5d; color: white; min-height: 38px; padding: 0 14px; font-weight: 650; cursor: pointer; }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 10px; }
+    .metric { border: 1px solid #dde5e9; border-radius: 8px; padding: 12px; background: #fbfcfc; }
+    .metric b { display: block; font-size: 12px; color: #61717a; margin-bottom: 4px; }
+    .benchmark { margin-top: 18px; }
+    .benchmark img { display: block; width: min(100%, 760px); border: 1px solid #dde5e9; border-radius: 8px; background: #ffffff; }
+    .benchmark p { color: #61717a; margin: 8px 0 0; }
+    .stack { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    .step { border: 1px solid #dde5e9; border-radius: 8px; padding: 10px; margin-top: 8px; background: #fbfcfc; }
+    .step b { display: block; font-size: 12px; color: #61717a; margin-bottom: 3px; }
+    .toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    label { color: #53616b; font-size: 14px; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #10181d; color: #d9f4ea; border-radius: 8px; padding: 14px; min-height: 180px; max-height: 360px; overflow: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { border-bottom: 1px solid #e3e9ed; padding: 8px; text-align: left; }
+    @media (max-width: 840px) {
+      .grid { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .stack { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>CONVERA</h1>
+        <p class="tagline">Persistent inference state, local reusable storage, measurable reuse.</p>
+      </div>
+      <button id="refresh">Refresh</button>
+    </header>
+    <div class="grid">
+      <form id="promptForm">
+        <textarea id="prompt">Explain how neural networks work in detail.</textarea>
+        <p class="toolbar">
+          <select id="precision" aria-label="Precision">
+            <option value="auto">Auto precision</option>
+            <option value="fp16">fp16</option>
+            <option value="int8">int8</option>
+            <option value="int4">int4</option>
+          </select>
+          <label>Max tokens <input id="maxTokens" type="number" min="1" max="128" value="16"></label>
+          <label><input id="audit" type="checkbox"> Audit trace</label>
+        </p>
+        <p><button id="run" type="submit">Run</button></p>
+        <pre id="output">Ready.</pre>
+      </form>
+      <section>
+        <div class="metrics" id="latest"></div>
+        <table>
+          <thead>
+            <tr><th>Run</th><th>Latency</th><th>TPS</th><th>KV</th><th>Precision</th><th>Avoided</th></tr>
+          </thead>
+          <tbody id="history"></tbody>
+        </table>
+      </section>
+    </div>
+    <section class="benchmark">
+      <h2>Benchmark</h2>
+      <button id="refreshGraph">Refresh Graph</button>
+      <p id="graphStatus">No benchmark graph yet.</p>
+      <img id="benchmarkGraph" alt="CONVERA benchmark latency graph" hidden>
+    </section>
+    <div class="stack">
+      <section>
+        <h2>Execution Inspector</h2>
+        <button id="refreshInspector">Refresh Inspector</button>
+        <div id="inspector">No execution yet.</div>
+      </section>
+      <section>
+        <h2>Audit Trace</h2>
+        <div class="toolbar">
+          <button id="refreshAudit">Refresh Audit</button>
+          <button id="downloadAudit">Download JSON</button>
+        </div>
+        <div id="auditTrace">Enable audit trace for a run to create an exportable trace.</div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const latest = document.getElementById("latest");
+    const history = document.getElementById("history");
+    const output = document.getElementById("output");
+    const runButton = document.getElementById("run");
+    const graph = document.getElementById("benchmarkGraph");
+    const graphStatus = document.getElementById("graphStatus");
+    const inspector = document.getElementById("inspector");
+    const auditTrace = document.getElementById("auditTrace");
+    let lastRequestId = null;
+
+    function metric(label, value) {
+      return `<div class="metric"><b>${label}</b><span>${value}</span></div>`;
+    }
+
+    async function loadMetrics() {
+      const res = await fetch("/metrics");
+      const data = await res.json();
+      const last = data[data.length - 1] || {};
+      latest.innerHTML = [
+        metric("Latency", last.latency ? `${last.latency.toFixed(2)}s` : "-"),
+        metric("Tokens/sec", last.tps ? last.tps.toFixed(2) : "-"),
+        metric("KV hit rate", last.kv_hit_rate !== undefined ? last.kv_hit_rate.toFixed(2) : "-"),
+        metric("Compute avoided", last.compute_avoided_pct !== undefined ? last.compute_avoided_pct.toFixed(1) + "%" : "-")
+      ].join("");
+      history.innerHTML = data.slice(-20).reverse().map(row => `
+        <tr>
+          <td>${row.label || "run"}</td>
+          <td>${row.latency ? row.latency.toFixed(2) + "s" : "-"}</td>
+          <td>${row.tps ? row.tps.toFixed(2) : "-"}</td>
+          <td>${row.kv_hit ? "hit" : "miss"}</td>
+          <td>${row.precision || "-"}</td>
+          <td>${row.compute_avoided_pct !== undefined ? row.compute_avoided_pct.toFixed(1) + "%" : "-"}</td>
+        </tr>
+      `).join("");
+    }
+
+    function loadGraph() {
+      graph.hidden = false;
+      graphStatus.textContent = "";
+      graph.src = "/benchmark-graph?t=" + new Date().getTime();
+    }
+
+    function renderSteps(steps) {
+      if (!steps || !steps.length) return "<p>No steps recorded.</p>";
+      return steps.map(step => `
+        <div class="step">
+          <b>${step.name || "step"}</b>
+          <span>${step.decision || step.status || "-"}</span>
+        </div>
+      `).join("");
+    }
+
+    async function loadInspector() {
+      try {
+        const url = lastRequestId ? `/api/execution/${lastRequestId}` : "/api/execution/latest";
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("No execution record yet.");
+        const data = await res.json();
+        lastRequestId = data.request_id || lastRequestId;
+        inspector.innerHTML = `
+          <p><b>Mode:</b> ${data.mode || "-"}</p>
+          <p><b>Precision:</b> ${data.precision || "-"}</p>
+          <p><b>Validated:</b> ${data.validated ? "yes" : "no"}</p>
+          ${renderSteps(data.steps)}
+        `;
+      } catch (error) {
+        inspector.textContent = String(error.message || error);
+      }
+    }
+
+    async function loadAudit() {
+      if (!lastRequestId) {
+        auditTrace.textContent = "No request selected yet.";
+        return;
+      }
+      try {
+        const res = await fetch(`/audit/${lastRequestId}`);
+        if (!res.ok) throw new Error("No audit trace for this request.");
+        const data = await res.json();
+        auditTrace.innerHTML = `
+          <p><b>Status:</b> ${data.status || "-"}</p>
+          <p><b>Request:</b> ${data.request_id || "-"}</p>
+          ${renderSteps((data.steps || []).map(step => ({
+            name: step.name,
+            decision: JSON.stringify(step.data || {})
+          })))}
+        `;
+      } catch (error) {
+        auditTrace.textContent = String(error.message || error);
+      }
+    }
+
+    graph.addEventListener("error", () => {
+      graph.hidden = true;
+      graphStatus.textContent = "No benchmark graph yet.";
+    });
+
+    graph.addEventListener("load", () => {
+      graph.hidden = false;
+      graphStatus.textContent = "";
+    });
+
+    document.getElementById("refresh").addEventListener("click", loadMetrics);
+    document.getElementById("refreshGraph").addEventListener("click", loadGraph);
+    document.getElementById("refreshInspector").addEventListener("click", loadInspector);
+    document.getElementById("refreshAudit").addEventListener("click", loadAudit);
+    document.getElementById("downloadAudit").addEventListener("click", () => {
+      if (!lastRequestId) return;
+      window.location.href = `/audit/${lastRequestId}/export?format=json`;
+    });
+    document.getElementById("promptForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      runButton.disabled = true;
+      output.textContent = "Running...";
+      try {
+        const res = await fetch("/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: document.getElementById("prompt").value,
+            max_new_tokens: Number(document.getElementById("maxTokens").value || 16),
+            precision: document.getElementById("precision").value,
+            audit: document.getElementById("audit").checked
+          })
+        });
+        const data = await res.json();
+        lastRequestId = data.request_id || data.stats?.request_id || lastRequestId;
+        output.textContent = data.output || JSON.stringify(data, null, 2);
+        await loadMetrics();
+        await loadInspector();
+        await loadAudit();
+      } catch (error) {
+        output.textContent = String(error);
+      } finally {
+        runButton.disabled = false;
+      }
+    });
+    loadMetrics();
+    loadGraph();
+    setInterval(loadMetrics, 3000);
+  </script>
+</body>
+</html>
